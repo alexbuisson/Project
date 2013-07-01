@@ -1,0 +1,18 @@
+http://stefanstools.sourceforge.net/StExBar.html
+http://www.autohotkey.com/
+
+%selafile
+
+Manual/ReadMe for StExBar integration
+
+fournir .ahk
+et un build
+
+AHK license text and link !!!
+
+Push in GitHub and publish for AHK community !!!
+
+Support Drive Letter to UNC, and Direct UNC
+Support single and multiple selection
+
+    
