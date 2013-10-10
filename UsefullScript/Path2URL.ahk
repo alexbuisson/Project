@@ -63,33 +63,48 @@ GetUNCPath(letter)
 Loop Read, %1%
 {
 	p := A_LoopReadLine
-	;MsgBox %p%
+	; MsgBox %p%
   if ( RegExMatch( p , "[A-Za-z][:]") ) ; match a regex for drive letter "^:"
   {
-    unc := GetUNCPath( SubStr( p, 1, 2) )
+    ; MsgBox "Level1" %p%
+    StringReplace, p, p, ", , All
+    letter := SubStr( p, 1, 2)
+    ; MsgBox "Letter is " %letter%
+    unc := GetUNCPath( letter )
+    ; MsgBox %unc%
     if ( unc <> "" )
     {
       withoutDriveLetter := SubStr( p, 3, strLen(p)-2 )
       pathrep = %link%%unc%%withoutDriveLetter%%CR%%LF%%pathrep%       
-    }
-  }
-  else ; should already be an unc (check to be sure)
-  {
-    if ( RegExMatch( p , "\\\\") ) 
-    {
-      pathrep = %link%%p%%CR%%LF%%pathrep%
+      ; MsgBox "LOCAL LETTER " %pathrep%
     }
     else
     {
-      ; Msgbox "ignored " %p%
+      Msgbox "Drive Letter to Link error " %p%
+    }
+
+  }
+  else ; should already be an unc (check to be sure)
+  {
+    ; MsgBox "Level 2"
+    if ( RegExMatch( p , "\\\\") ) 
+    {
+      pathrep = %link%%p%%CR%%LF%%pathrep%
+      ; MsgBox "UNC " %pathrep%
+    }
+    else
+    {
+      Msgbox "Network path to Link error " %p%
     }
   }  
 }
 
+; MsgBox "here " %pathrep%
+
 StringReplace, pathrep, pathrep, \, /, All
 StringReplace, pathrep, pathrep, %A_SPACE%, `%20 , All
 StringReplace, pathrep, pathrep, ", , All
-; MsgBox %pathrep%	
+; MsgBox "Final path to pu in the CB " %pathrep%	
 clipboard =  %pathrep% 
 
 return
